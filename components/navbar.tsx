@@ -18,7 +18,6 @@ export default function Navbar() {
   const navLinks = [
     { name: "الرئيسية", href: "/" },
     { name: "خدماتنا", href: "/services" },
-    { name: "اتصل بنا", href: "/contact" },
   ];
 
   return (
