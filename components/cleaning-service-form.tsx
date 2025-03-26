@@ -11,7 +11,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
-// React 18 compatible component
 export default function CleaningServiceForm() {
   const [selectedService, setSelectedService] = useState<string | null>(null)
   const [step, setStep] = useState(1)
@@ -315,7 +314,7 @@ export default function CleaningServiceForm() {
                       <Label htmlFor="propertyType">نوع العقار</Label>
                       <Select
                         value={formData.propertyType}
-                        onValueChange={(value) => setFormData({ ...formData, propertyType: value })}
+                        onValueChange={(value: any) => setFormData({ ...formData, propertyType: value })}
                       >
                         <SelectTrigger id="propertyType" className="text-right">
                           <SelectValue
@@ -415,7 +414,7 @@ export default function CleaningServiceForm() {
                     <Label htmlFor="preferredTime">الوقت المفضل</Label>
                     <Select
                       value={formData.preferredTime}
-                      onValueChange={(value) => setFormData({ ...formData, preferredTime: value })}
+                      onValueChange={(value: any) => setFormData({ ...formData, preferredTime: value })}
                     >
                       <SelectTrigger id="preferredTime" className="text-right">
                         <SelectValue placeholder="اختر الوقت المناسب" />

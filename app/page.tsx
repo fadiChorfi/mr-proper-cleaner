@@ -1,8 +1,14 @@
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Check, Home, Building2, Star, ArrowRight } from "lucide-react"
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Check, Home, Building2, Star, ArrowRight } from "lucide-react";
 
 export default function HomePage() {
   return (
@@ -11,9 +17,12 @@ export default function HomePage() {
       <section className="relative bg-gradient-to-l from-primary/10 to-primary/5 py-16 md:py-24">
         <div className="container grid gap-8 md:grid-cols-2 md:gap-12 items-center">
           <div className="space-y-6 order-2 md:order-1">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">خدمات تنظيف احترافية لمنزلك ومكتبك</h1>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+              خدمات تنظيف احترافية لمنزلك ومكتبك
+            </h1>
             <p className="text-xl text-muted-foreground">
-              نقدم تنظيفًا شاملاً مع الاهتمام بالتفاصيل في كل مرة، مما يجعل مساحتك نظيفة ومريحة.
+              نقدم تنظيفًا شاملاً مع الاهتمام بالتفاصيل في كل مرة، مما يجعل
+              مساحتك نظيفة ومريحة.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" asChild>
@@ -25,7 +34,13 @@ export default function HomePage() {
             </div>
           </div>
           <div className="relative h-[300px] md:h-[400px] rounded-lg overflow-hidden order-1 md:order-2">
-            <Image src="/images/hero-image.jpg" alt="خدمة تنظيف احترافية" fill className="object-cover" priority />
+            <Image
+              src="/images/hero-image.jpg"
+              alt="خدمة تنظيف احترافية"
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
         </div>
       </section>
@@ -34,9 +49,12 @@ export default function HomePage() {
       <section className="py-16 md:py-24">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">خدمات التنظيف لدينا</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              خدمات التنظيف لدينا
+            </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              نقدم مجموعة واسعة من خدمات التنظيف لتلبية جميع احتياجاتك، من التنظيف المنزلي المنتظم إلى الخدمات المتخصصة.
+              نقدم مجموعة واسعة من خدمات التنظيف لتلبية جميع احتياجاتك، من
+              التنظيف المنزلي المنتظم إلى الخدمات المتخصصة.
             </p>
           </div>
 
@@ -62,7 +80,10 @@ export default function HomePage() {
                     <span>تعقيم الحمامات والمطابخ</span>
                   </li>
                   <li className="mt-4">
-                    <Link href="/services" className="text-primary flex items-center hover:underline">
+                    <Link
+                      href="/services"
+                      className="text-primary flex items-center hover:underline"
+                    >
                       <ArrowRight className="ml-1 h-4 w-4 rotate-180" />
                       اعرف المزيد
                     </Link>
@@ -92,7 +113,10 @@ export default function HomePage() {
                     <span>تعقيم دورات المياه</span>
                   </li>
                   <li className="mt-4">
-                    <Link href="/services" className="text-primary flex items-center hover:underline">
+                    <Link
+                      href="/services"
+                      className="text-primary flex items-center hover:underline"
+                    >
                       <ArrowRight className="ml-1 h-4 w-4 rotate-180" />
                       اعرف المزيد
                     </Link>
@@ -135,7 +159,10 @@ export default function HomePage() {
                     <span>تنظيف عميق للسجاد</span>
                   </li>
                   <li className="mt-4">
-                    <Link href="/services" className="text-primary flex items-center hover:underline">
+                    <Link
+                      href="/services"
+                      className="text-primary flex items-center hover:underline"
+                    >
                       <ArrowRight className="ml-1 h-4 w-4 rotate-180" />
                       اعرف المزيد
                     </Link>
@@ -153,69 +180,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-16 md:py-24 bg-primary/5">
-        <div className="container">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">ماذا يقول عملاؤنا</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              لا تأخذ كلمتنا فقط. إليك ما يقوله عملاؤنا الراضون عن خدماتنا.
-            </p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                name: "سارة جونسون",
-                role: "صاحبة منزل",
-                content:
-                  "قام فريق مستر بروبر كلين بعمل رائع في منزلي. كانوا شاملين ومحترفين وتركوا كل شيء نظيفًا تمامًا. سأستخدم خدماتهم مرة أخرى بالتأكيد!",
-              },
-              {
-                name: "أحمد حسن",
-                role: "مدير مكتب",
-                content:
-                  "نستخدم مستر بروبر كلين لمساحة مكتبنا منذ أكثر من عام، وكانت جودة الخدمة ممتازة باستمرار. مساحة عملنا دائمًا نظيفة تمامًا بعد انتهائهم.",
-              },
-              {
-                name: "ليلى محمود",
-                role: "مديرة عقارات",
-                content:
-                  "كشخص يدير عدة عقارات، فإن العثور على خدمة تنظيف موثوقة أمر ضروري. لقد تجاوز مستر بروبر كلين توقعاتي باهتمامهم بالتفاصيل واحترافيتهم.",
-              },
-            ].map((testimonial, index) => (
-              <Card key={index} className="bg-background">
-                <CardContent className="pt-6">
-                  <div className="flex mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-primary text-primary" />
-                    ))}
-                  </div>
-                  <p className="mb-6">{testimonial.content}</p>
-                  <div className="flex items-center">
-                    <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
-                      {testimonial.name.charAt(0)}
-                    </div>
-                    <div className="mr-3">
-                      <p className="font-medium">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
+      
       <section className="py-16 md:py-24">
         <div className="container">
           <div className="bg-primary text-primary-foreground rounded-lg p-8 md:p-12">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">هل أنت مستعد لمساحة نظيفة تمامًا؟</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                هل أنت مستعد لمساحة نظيفة تمامًا؟
+              </h2>
               <p className="text-lg mb-8 text-primary-foreground/90">
-                احجز خدمات التنظيف الاحترافية لدينا اليوم واختبر الفرق الذي يحدثه التنظيف عالي الجودة.
+                احجز خدمات التنظيف الاحترافية لدينا اليوم واختبر الفرق الذي
+                يحدثه التنظيف عالي الجودة.
               </p>
               <Button size="lg" variant="secondary" asChild>
                 <Link href="/contact">احجز خدمة تنظيف الآن</Link>
@@ -225,6 +200,5 @@ export default function HomePage() {
         </div>
       </section>
     </>
-  )
+  );
 }
-
