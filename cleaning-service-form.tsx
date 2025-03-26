@@ -11,7 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
-// React 18 compatible component
+
+
 export default function CleaningServiceForm() {
   const [selectedService, setSelectedService] = useState<string | null>(null)
   const [step, setStep] = useState(1)
@@ -39,19 +40,18 @@ export default function CleaningServiceForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // In a real app, you would submit the form data to your backend
     alert("تم إرسال طلبك بنجاح! سنتصل بك قريبًا.")
     setStep(1)
     setSelectedService(null)
     setFormData({
-      fullName: "",
-      phone: "",
-      address: "",
-      propertyType: "",
-      serviceType: "",
-      preferredDate: "",
-      preferredTime: "",
-      additionalInfo: "",
+      fullName:"",
+      phone:"",
+      address:"",
+      propertyType:"",
+      serviceType:"",
+      preferredDate:"",
+      preferredTime:"",
+      additionalInfo:"",
     })
   }
 
@@ -190,14 +190,12 @@ export default function CleaningServiceForm() {
 
   const selectedServiceData = services.find((s) => s.id === selectedService)
 
-  // Simple badge component to avoid any potential compatibility issues
   const ServiceBadge = ({ children }: { children: React.ReactNode }) => (
     <div className="absolute left-0 top-0 translate-x-1/3 -translate-y-1/2 bg-primary text-primary-foreground px-2 py-0.5 rounded-full text-sm font-medium">
       {children}
     </div>
   )
 
-  // Helper component for RTL icon
   const ChevronRight = (props: any) => <ChevronLeft {...props} />
 
   return (

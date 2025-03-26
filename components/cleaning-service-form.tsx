@@ -49,7 +49,7 @@ export default function CleaningServiceForm() {
   };
 
   const handleServiceSelect = (serviceType: string) => {
-    if (Object.keys(selectedItems).length === 0) return;
+    if (Object.keys(selectedItems).length === 0 && !Object.keys(selectedItems) ) return;
     setSelectedService(serviceType);
     setFormData((prev) => ({ ...prev, serviceType }));
     setStep(1);
@@ -214,7 +214,7 @@ export default function CleaningServiceForm() {
   const selectedServiceData = services.find((s) => s.id === selectedService);
 
   const ServiceBadge = ({ children }: { children: React.ReactNode }) => (
-    <div className="absolute left-0 top-0 translate-x-1/3 -translate-y-1/2 bg-primary text-primary-foreground px-2 py-0.5 rounded-full text-sm font-medium">
+    <div className="">
       {children}
     </div>
   );
@@ -251,16 +251,14 @@ export default function CleaningServiceForm() {
               key={service.id}
               className={cn(
                 "transition-all hover:shadow-md cursor-pointer border-2",
-                service.recommended
-                  ? "border-primary"
-                  : "border-border hover:border-primary/50"
+                
+                  
+                   "border-border hover:border-primary/50"
               )}
               onClick={() => handleServiceSelect(service.id)}
             >
               <CardHeader className="pb-2 relative">
-                {service.recommended && (
-                  <ServiceBadge>الأكثر طلباً</ServiceBadge>
-                )}
+                
                 <div className="flex items-center justify-between">
                   <div className="p-2 rounded-full bg-primary/10 text-primary">
                     {service.icon}

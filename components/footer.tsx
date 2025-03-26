@@ -7,6 +7,7 @@ import {
   Phone,
   MapPin,
 } from "lucide-react";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -19,27 +20,20 @@ export default function Footer() {
               خدمات تنظيف احترافية للمنازل والشركات. نقدم خدمات تنظيف عالية
               الجودة مع الاهتمام بأدق التفاصيل.
             </p>
-            <div className="flex justify-between w-24">
+            <div className="flex justify-between w-14">
               <Link
-                href="#"
+                href="https://www.facebook.com/profile.php?id=61569214470319"
                 className="text-muted-foreground hover:text-primary"
               >
                 <Facebook className="h-5 w-5" />
                 <span className="sr-only">فيسبوك</span>
               </Link>
               <Link
-                href="#"
+                href="https://www.tiktok.com/@monsieur_propre_clean?_t=ZM-8ux7WK00oIJ&_r=1"
                 className="text-muted-foreground hover:text-primary"
               >
-                <Instagram className="h-5 w-5 " />
-                <span className="sr-only">انستغرام</span>
-              </Link>
-              <Link
-                href="#"
-                className="text-muted-foreground hover:text-primary"
-              >
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">تويتر</span>
+                <Image src="/tiktok.svg" alt="Tiktok" className="h-5 w-5 opacity-55" width={5} height={5} />
+                <span className="sr-only">تيكتوك</span>
               </Link>
             </div>
           </div>
@@ -79,7 +73,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <Phone className="h-5 w-5 ml-2 text-primary" />
-                <span className="text-muted-foreground">+123 456 7890</span>
+                <span className="text-muted-foreground">+213551669458</span>
               </li>
               <li className="flex items-start">
                 <Mail className="h-5 w-5 ml-2 text-primary" />
@@ -95,12 +89,6 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-        </div>
-
-        <div className="border-t mt-8 pt-8 text-center text-muted-foreground">
-          <p>
-            جميع الحقوق محفوظة &copy; {new Date().getFullYear()} مستر بروبر كلين
-          </p>
         </div>
       </div>
     </footer>

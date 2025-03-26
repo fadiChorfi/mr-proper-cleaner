@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
@@ -29,7 +28,6 @@ export default function Navbar() {
           </Button>
         </div>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-6">
           {navLinks.map((link) => (
             <Link
@@ -53,7 +51,6 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Mobile Menu Button */}
         <button
           className="md:hidden"
           onClick={toggleMenu}
@@ -67,7 +64,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Navigation */}
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="container py-4 flex flex-col gap-4">

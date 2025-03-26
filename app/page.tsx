@@ -13,7 +13,6 @@ import { Check, Home, Building2, Star, ArrowRight } from "lucide-react";
 export default function HomePage() {
   return (
     <>
-      {/* Hero Section */}
       <section className="relative bg-gradient-to-l from-primary/10 to-primary/5 py-16 md:py-24">
         <div className="container grid gap-8 md:grid-cols-2 md:gap-12 items-center">
           <div className="space-y-6 order-2 md:order-1">
@@ -33,12 +32,12 @@ export default function HomePage() {
               </Button>
             </div>
           </div>
-          <div className="relative h-[300px] md:h-[400px] rounded-lg overflow-hidden order-1 md:order-2">
+          <div className="relative  h-[300px] md:h-[400px] rounded-lg overflow-hidden order-1 md:order-2">
             <Image
-              src="/images/hero-image.jpg"
+              src="logo.png"
               alt="خدمة تنظيف احترافية"
               fill
-              className="object-cover"
+              className="object-contain mr-0 md:mr-6 lg:mr-6"
               priority
             />
           </div>
@@ -180,7 +179,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      
       <section className="py-16 md:py-24">
         <div className="container">
           <div className="bg-primary text-primary-foreground rounded-lg p-8 md:p-12">
@@ -193,7 +191,7 @@ export default function HomePage() {
                 يحدثه التنظيف عالي الجودة.
               </p>
               <Button size="lg" variant="secondary" asChild>
-                <Link href="/contact">احجز خدمة تنظيف الآن</Link>
+                <Link href="/services">احجز خدمة تنظيف الآن</Link>
               </Button>
             </div>
           </div>
