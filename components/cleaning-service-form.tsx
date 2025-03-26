@@ -1,19 +1,33 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { Check, ChevronLeft, Home, Building2, Car, Droplets, Brush } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import { cn } from "@/lib/utils"
+import type React from "react";
+import { useState } from "react";
+import {
+  Check,
+  ChevronLeft,
+  Home,
+  Building2,
+  Car,
+  Droplets,
+  Brush,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
 
 export default function CleaningServiceForm() {
-  const [selectedService, setSelectedService] = useState<string | null>(null)
-  const [step, setStep] = useState(1)
+  const [selectedService, setSelectedService] = useState<string | null>(null);
+  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -23,24 +37,29 @@ export default function CleaningServiceForm() {
     preferredDate: "",
     preferredTime: "",
     additionalInfo: "",
-  })
+  });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleServiceSelect = (serviceType: string) => {
-    setSelectedService(serviceType)
-    setFormData((prev) => ({ ...prev, serviceType }))
-    setStep(2)
-  }
+    if (Object.keys(selectedItems).length === 0) return;
+    setSelectedService(serviceType);
+    setFormData((prev) => ({ ...prev, serviceType }));
+    setStep(1);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    alert("تم إرسال طلبك بنجاح! سنتصل بك قريبًا.")
-    setStep(1)
-    setSelectedService(null)
+    e.preventDefault();
+    alert("تم إرسال طلبك بنجاح! سنتصل بك قريبًا.");
+    setStep(1);
+    setSelectedService(null);
     setFormData({
       fullName: "",
       phone: "",
@@ -50,26 +69,32 @@ export default function CleaningServiceForm() {
       preferredDate: "",
       preferredTime: "",
       additionalInfo: "",
-    })
-  }
+    });
+  };
 
   const goBack = () => {
     if (step > 1) {
-      setStep(step - 1)
+      setStep(step - 1);
     } else {
-      setSelectedService(null)
+      setSelectedService(null);
     }
-  }
+  };
 
   const isFormValid = () => {
     if (step === 2) {
-      return formData.propertyType !== "" || selectedServiceData?.noPropertyType
+      return (
+        formData.propertyType !== "" || selectedServiceData?.noPropertyType
+      );
     }
     if (step === 3) {
-      return formData.fullName !== "" && formData.phone !== "" && formData.address !== ""
+      return (
+        formData.fullName !== "" &&
+        formData.phone !== "" &&
+        formData.address !== ""
+      );
     }
-    return true
-  }
+    return true;
+  };
 
   const services = [
     {
@@ -162,7 +187,7 @@ export default function CleaningServiceForm() {
       price: "بعد المعاينة",
       noPropertyType: true,
     },
-  ]
+  ];
 
   const propertyTypes = {
     home: [
@@ -178,25 +203,42 @@ export default function CleaningServiceForm() {
       { id: "medium", label: "زربية متوسطة (3×4 متر)" },
       { id: "large", label: "زربية كبيرة (4×6 متر)" },
     ],
-  }
+  };
 
   const timeSlots = [
     { id: "morning", label: "صباحاً (8:00 - 12:00)" },
     { id: "afternoon", label: "ظهراً (12:00 - 16:00)" },
     { id: "evening", label: "مساءً (16:00 - 20:00)" },
-  ]
+  ];
 
-  const selectedServiceData = services.find((s) => s.id === selectedService)
+  const selectedServiceData = services.find((s) => s.id === selectedService);
 
-  // Simple badge component to avoid any potential compatibility issues
   const ServiceBadge = ({ children }: { children: React.ReactNode }) => (
     <div className="absolute left-0 top-0 translate-x-1/3 -translate-y-1/2 bg-primary text-primary-foreground px-2 py-0.5 rounded-full text-sm font-medium">
       {children}
     </div>
-  )
+  );
 
-  // Helper component for RTL icon
-  const ChevronRight = (props: any) => <ChevronLeft {...props} />
+  const [selectedItems, setSelectedItems] = useState<Record<string, string[]>>(
+    {}
+  );
+  const toggleItemSelection = (serviceId: string, item: string) => {
+    setSelectedItems((prev) => {
+      const serviceItems = prev[serviceId] || [];
+      const isSelected = serviceItems.includes(item);
+
+      const updatedItems = isSelected
+        ? serviceItems.filter((i) => i !== item)
+        : [...serviceItems, item];
+
+      return {
+        ...prev,
+        [serviceId]: updatedItems,
+      };
+    });
+  };
+
+  const ChevronRight = (props: any) => <ChevronLeft {...props} />;
 
   return (
     <div className="container mx-auto py-8 px-4">
@@ -209,14 +251,20 @@ export default function CleaningServiceForm() {
               key={service.id}
               className={cn(
                 "transition-all hover:shadow-md cursor-pointer border-2",
-                service.recommended ? "border-primary" : "border-border hover:border-primary/50",
+                service.recommended
+                  ? "border-primary"
+                  : "border-border hover:border-primary/50"
               )}
               onClick={() => handleServiceSelect(service.id)}
             >
               <CardHeader className="pb-2 relative">
-                {service.recommended && <ServiceBadge>الأكثر طلباً</ServiceBadge>}
+                {service.recommended && (
+                  <ServiceBadge>الأكثر طلباً</ServiceBadge>
+                )}
                 <div className="flex items-center justify-between">
-                  <div className="p-2 rounded-full bg-primary/10 text-primary">{service.icon}</div>
+                  <div className="p-2 rounded-full bg-primary/10 text-primary">
+                    {service.icon}
+                  </div>
                   <CardTitle className="text-xl">{service.title}</CardTitle>
                 </div>
               </CardHeader>
@@ -224,22 +272,42 @@ export default function CleaningServiceForm() {
                 <p className="text-right mb-2">{service.description}</p>
                 {service.items.length > 0 && (
                   <div className="flex flex-wrap justify-end gap-1 mb-3">
-                    {service.items.map((item, index) => (
-                      <span
-                        key={index}
-                        className="inline-flex items-center text-sm bg-muted px-2 py-1 rounded-md ml-1 mb-1"
-                      >
-                        {item}
-                        {index < service.items.length - 1 && <span className="mx-1">•</span>}
-                      </span>
-                    ))}
+                    {service.items.length > 0 && (
+                      <div className="flex flex-wrap justify-end gap-2 mb-3">
+                        {service.items.map((item: string, index: number) => {
+                          const isSelected =
+                            selectedItems[service.id]?.includes(item);
+
+                          return (
+                            <button
+                              key={index}
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation(); // prevent triggering card click
+                                toggleItemSelection(service.id, item);
+                              }}
+                              className={cn(
+                                "inline-flex items-center text-sm px-3 py-1 rounded-md border transition",
+                                isSelected
+                                  ? "bg-primary text-white border-primary"
+                                  : "bg-muted text-muted-foreground border-border hover:border-primary"
+                              )}
+                            >
+                              {item}
+                              <span className="ml-2 text-xs">
+                                {isSelected ? "✓" : "+"}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 )}
                 <div className="flex justify-between items-center mt-4">
-                  <Button variant="ghost" size="sm" className="text-primary">
-                    اختيار <ChevronLeft className="h-4 w-4 mr-1" />
-                  </Button>
-                  <div className="text-sm font-medium">السعر: {service.price}</div>
+                  <div className="text-sm font-medium">
+                    السعر: {service.price}
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -249,31 +317,53 @@ export default function CleaningServiceForm() {
         <Card className="max-w-2xl mx-auto">
           <CardHeader>
             <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="p-2 rounded-full bg-primary/10 text-primary ml-2">
+                  {selectedServiceData?.icon}
+                </div>
+                <CardTitle>{selectedServiceData?.title}</CardTitle>
+              </div>
               <Button variant="ghost" size="sm" onClick={goBack}>
                 <ChevronRight className="h-4 w-4 ml-1" />
                 رجوع
               </Button>
-              <div className="flex items-center">
-                <div className="p-2 rounded-full bg-primary/10 text-primary ml-2">{selectedServiceData?.icon}</div>
-                <CardTitle>{selectedServiceData?.title}</CardTitle>
-              </div>
             </div>
             <div className="flex justify-center mt-4">
               <div className="flex items-center">
                 <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 1 ? "bg-primary text-white" : "bg-muted text-muted-foreground"}`}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                    step >= 1
+                      ? "bg-primary text-white"
+                      : "bg-muted text-muted-foreground"
+                  }`}
                 >
                   1
                 </div>
-                <div className={`w-16 h-1 ${step >= 2 ? "bg-primary" : "bg-muted"}`}></div>
                 <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 2 ? "bg-primary text-white" : "bg-muted text-muted-foreground"}`}
+                  className={`w-16 h-1 ${
+                    step >= 2 ? "bg-primary" : "bg-muted"
+                  }`}
+                ></div>
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                    step >= 2
+                      ? "bg-primary text-white"
+                      : "bg-muted text-muted-foreground"
+                  }`}
                 >
                   2
                 </div>
-                <div className={`w-16 h-1 ${step >= 3 ? "bg-primary" : "bg-muted"}`}></div>
                 <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 3 ? "bg-primary text-white" : "bg-muted text-muted-foreground"}`}
+                  className={`w-16 h-1 ${
+                    step >= 3 ? "bg-primary" : "bg-muted"
+                  }`}
+                ></div>
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                    step >= 3
+                      ? "bg-primary text-white"
+                      : "bg-muted text-muted-foreground"
+                  }`}
                 >
                   3
                 </div>
@@ -285,12 +375,15 @@ export default function CleaningServiceForm() {
               <div className="text-center py-4">
                 <h3 className="text-lg font-medium mb-4">اختر نوع الخدمة</h3>
                 <p className="mb-6">{selectedServiceData?.description}</p>
-                {selectedServiceData?.items.length > 0 && (
+                {selectedItems[selectedService]?.length > 0 && (
                   <div className="bg-muted/30 p-4 rounded-lg mb-6">
                     <h4 className="font-medium mb-2">الخدمة تشمل:</h4>
                     <ul className="space-y-1 text-right">
-                      {selectedServiceData?.items.map((item, index) => (
-                        <li key={index} className="flex items-center justify-end">
+                      {selectedItems[selectedService].map((item, index) => (
+                        <li
+                          key={index}
+                          className="flex items-center justify-end"
+                        >
                           <span>{item}</span>
                           <Check className="h-4 w-4 ml-2 text-primary" />
                         </li>
@@ -306,7 +399,9 @@ export default function CleaningServiceForm() {
 
             {step === 2 && (
               <div className="py-4">
-                <h3 className="text-lg font-medium mb-4 text-center">اختر نوع العقار</h3>
+                <h3 className="text-lg font-medium mb-4 text-center">
+                  اختر نوع العقار
+                </h3>
 
                 {!selectedServiceData?.noPropertyType ? (
                   <div className="space-y-4">
@@ -314,15 +409,24 @@ export default function CleaningServiceForm() {
                       <Label htmlFor="propertyType">نوع العقار</Label>
                       <Select
                         value={formData.propertyType}
-                        onValueChange={(value: any) => setFormData({ ...formData, propertyType: value })}
+                        onValueChange={(value: any) =>
+                          setFormData({ ...formData, propertyType: value })
+                        }
                       >
                         <SelectTrigger id="propertyType" className="text-right">
                           <SelectValue
-                            placeholder={selectedService === "carpet" ? "اختر نوع الزربية" : "اختر نوع المنزل"}
+                            placeholder={
+                              selectedService === "carpet"
+                                ? "اختر نوع الزربية"
+                                : "اختر نوع المنزل"
+                            }
                           />
                         </SelectTrigger>
                         <SelectContent>
-                          {(selectedService === "carpet" ? propertyTypes.carpet : propertyTypes.home).map((type) => (
+                          {(selectedService === "carpet"
+                            ? propertyTypes.carpet
+                            : propertyTypes.home
+                          ).map((type) => (
                             <SelectItem key={type.id} value={type.id}>
                               {type.label}
                             </SelectItem>
@@ -332,7 +436,11 @@ export default function CleaningServiceForm() {
                     </div>
 
                     <div className="mt-6">
-                      <Button className="w-full" onClick={() => setStep(3)} disabled={!isFormValid()}>
+                      <Button
+                        className="w-full"
+                        onClick={() => setStep(3)}
+                        disabled={!isFormValid()}
+                      >
                         متابعة
                       </Button>
                     </div>
@@ -343,8 +451,8 @@ export default function CleaningServiceForm() {
                       {selectedService === "office"
                         ? "سيتم حساب السعر بناءً على مساحة المكتب (100 دج لكل متر مربع)"
                         : selectedService === "car"
-                          ? "سعر تنظيف السيارة: 1000 دج"
-                          : "سيتم تحديد السعر بعد المعاينة"}
+                        ? "سعر تنظيف السيارة: 1000 دج"
+                        : "سيتم تحديد السعر بعد المعاينة"}
                     </p>
                     <Button className="w-full" onClick={() => setStep(3)}>
                       متابعة
@@ -356,7 +464,9 @@ export default function CleaningServiceForm() {
 
             {step === 3 && (
               <form onSubmit={handleSubmit} className="py-4 space-y-4">
-                <h3 className="text-lg font-medium mb-4 text-center">أدخل بيانات الاتصال</h3>
+                <h3 className="text-lg font-medium mb-4 text-center">
+                  أدخل بيانات الاتصال
+                </h3>
 
                 <div className="grid gap-3">
                   <div className="grid gap-2">
@@ -414,7 +524,9 @@ export default function CleaningServiceForm() {
                     <Label htmlFor="preferredTime">الوقت المفضل</Label>
                     <Select
                       value={formData.preferredTime}
-                      onValueChange={(value: any) => setFormData({ ...formData, preferredTime: value })}
+                      onValueChange={(value: any) =>
+                        setFormData({ ...formData, preferredTime: value })
+                      }
                     >
                       <SelectTrigger id="preferredTime" className="text-right">
                         <SelectValue placeholder="اختر الوقت المناسب" />
@@ -430,7 +542,9 @@ export default function CleaningServiceForm() {
                   </div>
 
                   <div className="grid gap-2">
-                    <Label htmlFor="additionalInfo">ملاحظات إضافية (اختياري)</Label>
+                    <Label htmlFor="additionalInfo">
+                      ملاحظات إضافية (اختياري)
+                    </Label>
                     <Textarea
                       id="additionalInfo"
                       name="additionalInfo"
@@ -443,7 +557,11 @@ export default function CleaningServiceForm() {
                 </div>
 
                 <div className="pt-4">
-                  <Button type="submit" className="w-full" disabled={!isFormValid()}>
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={!isFormValid()}
+                  >
                     تأكيد الطلب
                   </Button>
                 </div>
@@ -453,6 +571,5 @@ export default function CleaningServiceForm() {
         </Card>
       )}
     </div>
-  )
+  );
 }
-
