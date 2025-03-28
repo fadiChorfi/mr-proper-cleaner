@@ -162,7 +162,6 @@ export default function CleaningServiceForm() {
     setSelectedService(serviceType)
     setFormData((prev) => ({ ...prev, serviceType }))
 
-    // Initialize selected items for this service if not already set
     setSelectedItems((prev) => {
       if (!prev[serviceType] && services.find((s) => s.id === serviceType)?.items.length > 0) {
         return {
@@ -188,16 +187,9 @@ export default function CleaningServiceForm() {
         },
         body: JSON.stringify(formData),
       })
-
-      if (!res.ok) {
-        throw new Error(`Failed to submit: ${res.statusText}`)
-      }
-
       const content = await res.json()
-      console.log("Submission successful:", content)
-      alert(content.data?.tableRange || "Data submitted successfully!")
+      alert("Data submitted successfully!")
 
-      // Reset form
       setStep(1)
       setSelectedService(null)
       setFormData({
@@ -212,7 +204,6 @@ export default function CleaningServiceForm() {
         selectedItems: [],
       })
     } catch (error) {
-      console.error("Submission error:", error)
       alert("Failed to submit. Please try again.")
     }
   }

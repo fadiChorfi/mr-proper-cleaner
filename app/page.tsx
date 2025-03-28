@@ -25,7 +25,7 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" asChild>
-                <Link href="/contact">احجز خدمة تنظيف</Link>
+                <Link href="/service">احجز خدمة تنظيف</Link>
               </Button>
             </div>
           </div>
