@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/.env.lo
 
 # next.js
 /.next/

@@ -1,6 +1,5 @@
 import type React from "react";
 import { Tajawal } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
@@ -13,7 +12,6 @@ const tajawal = Tajawal({
 export const metadata = {
   title: "مستر بروبر كلين | خدمات تنظيف احترافية",
   description: "خدمات تنظيف احترافية للمنازل والشركات",
-  generator: "v0.dev",
 };
 
 export default function RootLayout({

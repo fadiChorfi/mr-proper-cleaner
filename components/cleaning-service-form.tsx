@@ -28,6 +28,9 @@ import { cn } from "@/lib/utils";
 export default function CleaningServiceForm() {
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [step, setStep] = useState(1);
+  const [selectedItems, setSelectedItems] = useState<Record<string, string[]>>(
+    {}
+  );
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -37,6 +40,7 @@ export default function CleaningServiceForm() {
     preferredDate: "",
     preferredTime: "",
     additionalInfo: "",
+    selectedItems: [] as string[],
   });
 
   const handleInputChange = (
@@ -49,27 +53,52 @@ export default function CleaningServiceForm() {
   };
 
   const handleServiceSelect = (serviceType: string) => {
-    if (Object.keys(selectedItems).length === 0 && !Object.keys(selectedItems) ) return;
+    if (Object.keys(selectedItems).length === 0 && !Object.keys(selectedItems))
+      return;
     setSelectedService(serviceType);
     setFormData((prev) => ({ ...prev, serviceType }));
     setStep(1);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("تم إرسال طلبك بنجاح! سنتصل بك قريبًا.");
-    setStep(1);
-    setSelectedService(null);
-    setFormData({
-      fullName: "",
-      phone: "",
-      address: "",
-      propertyType: "",
-      serviceType: "",
-      preferredDate: "",
-      preferredTime: "",
-      additionalInfo: "",
-    });
+
+    try {
+      const res = await fetch("/api/submit", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        throw new Error(`Failed to submit: ${res.statusText}`);
+      }
+
+      const content = await res.json();
+      console.log("Submission successful:", content);
+      alert(content.data?.tableRange || "Data submitted successfully!");
+
+      // Reset form
+      setStep(1);
+      setSelectedService(null);
+      setFormData({
+        fullName: "",
+        phone: "",
+        address: "",
+        propertyType: "",
+        serviceType: "",
+        preferredDate: "",
+        preferredTime: "",
+        additionalInfo: "",
+        selectedItems: [],
+      });
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("Failed to submit. Please try again.");
+    }
   };
 
   const goBack = () => {
@@ -213,15 +242,6 @@ export default function CleaningServiceForm() {
 
   const selectedServiceData = services.find((s) => s.id === selectedService);
 
-  const ServiceBadge = ({ children }: { children: React.ReactNode }) => (
-    <div className="">
-      {children}
-    </div>
-  );
-
-  const [selectedItems, setSelectedItems] = useState<Record<string, string[]>>(
-    {}
-  );
   const toggleItemSelection = (serviceId: string, item: string) => {
     setSelectedItems((prev) => {
       const serviceItems = prev[serviceId] || [];
@@ -230,6 +250,12 @@ export default function CleaningServiceForm() {
       const updatedItems = isSelected
         ? serviceItems.filter((i) => i !== item)
         : [...serviceItems, item];
+
+      // Update formData with selected items
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        selectedItems: updatedItems,
+      }));
 
       return {
         ...prev,
@@ -251,14 +277,12 @@ export default function CleaningServiceForm() {
               key={service.id}
               className={cn(
                 "transition-all hover:shadow-md cursor-pointer border-2",
-                
-                  
-                   "border-border hover:border-primary/50"
+
+                "border-border hover:border-primary/50"
               )}
               onClick={() => handleServiceSelect(service.id)}
             >
               <CardHeader className="pb-2 relative">
-                
                 <div className="flex items-center justify-between">
                   <div className="p-2 rounded-full bg-primary/10 text-primary">
                     {service.icon}
