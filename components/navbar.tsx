@@ -24,7 +24,7 @@ export default function Navbar() {
       <div className="container flex  h-16 items-center justify-between ">
         <div className="hidden md:block">
           <Button asChild>
-            <Link href="/contact">احجز الآن</Link>
+            <Link href="/service">احجز الآن</Link>
           </Button>
         </div>
 

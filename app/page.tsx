@@ -27,9 +27,6 @@ export default function HomePage() {
               <Button size="lg" asChild>
                 <Link href="/contact">احجز خدمة تنظيف</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/services">خدماتنا</Link>
-              </Button>
             </div>
           </div>
           <div className="relative  h-[300px] md:h-[400px] rounded-lg overflow-hidden order-1 md:order-2">
@@ -37,7 +34,7 @@ export default function HomePage() {
               src="logo.png"
               alt="خدمة تنظيف احترافية"
               fill
-              className="object-contain mr-0 md:mr-6 lg:mr-6"
+              className="object-contain mr-0 md:mr-6 lg:mr-36"
               priority
             />
           </div>
@@ -57,11 +54,13 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-3">
             <Card className="border-2 hover:border-primary transition-colors">
               <CardHeader className="pb-2">
-                <Home className="h-10 w-10 text-primary mb-2" />
-                <CardTitle>تنظيف المنازل</CardTitle>
+                <div className="flex justify-between items-center">
+                  <CardTitle>تنظيف المنازل</CardTitle>
+                  <Home className="h-10 w-10 text-primary mb-2" />
+                </div>
                 <CardDescription>تنظيف شامل لمنزلك بالكامل</CardDescription>
               </CardHeader>
               <CardContent>
@@ -93,8 +92,12 @@ export default function HomePage() {
 
             <Card className="border-2 hover:border-primary transition-colors">
               <CardHeader className="pb-2">
-                <Building2 className="h-10 w-10 text-primary mb-2" />
-                <CardTitle>تنظيف المكاتب</CardTitle>
+                <div className="flex justify-between items-center">
+                  <CardTitle className=" w-fit">
+                    تنظيف المكاتب
+                  </CardTitle>
+                  <Building2 className="h-10 w-10 text-primary mb-2" />
+                </div>
                 <CardDescription>تنظيف احترافي لمساحات العمل</CardDescription>
               </CardHeader>
               <CardContent>
@@ -126,21 +129,23 @@ export default function HomePage() {
 
             <Card className="border-2 hover:border-primary transition-colors">
               <CardHeader className="pb-2">
-                <svg
-                  className="h-10 w-10 text-primary mb-2"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M9 6.5V7.5M12 6.5V7.5M15 6.5V7.5M9 11.5H15M9 16.5H12M4.5 20.5H19.5C20.0523 20.5 20.5 20.0523 20.5 19.5V4.5C20.5 3.94772 20.0523 3.5 19.5 3.5H4.5C3.94772 3.5 3.5 3.94772 3.5 4.5V19.5C3.5 20.0523 3.94772 20.5 4.5 20.5Z"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <CardTitle>خدمات خاصة</CardTitle>
+                <div className="flex justify-between items-center">
+                  <CardTitle>خدمات خاصة</CardTitle>
+                  <svg
+                    className="h-10 w-10 text-primary mb-2"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9 6.5V7.5M12 6.5V7.5M15 6.5V7.5M9 11.5H15M9 16.5H12M4.5 20.5H19.5C20.0523 20.5 20.5 20.0523 20.5 19.5V4.5C20.5 3.94772 20.0523 3.5 19.5 3.5H4.5C3.94772 3.5 3.5 3.94772 3.5 4.5V19.5C3.5 20.0523 3.94772 20.5 4.5 20.5Z"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
                 <CardDescription>حلول تنظيف متخصصة</CardDescription>
               </CardHeader>
               <CardContent>

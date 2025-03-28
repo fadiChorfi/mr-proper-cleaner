@@ -32,7 +32,13 @@ export default function Footer() {
                 href="https://www.tiktok.com/@monsieur_propre_clean?_t=ZM-8ux7WK00oIJ&_r=1"
                 className="text-muted-foreground hover:text-primary"
               >
-                <Image src="/tiktok.svg" alt="Tiktok" className="h-5 w-5 opacity-55" width={5} height={5} />
+                <Image
+                  src="/tiktok.svg"
+                  alt="Tiktok"
+                  className="h-5 w-5 opacity-55"
+                  width={5}
+                  height={5}
+                />
                 <span className="sr-only">تيكتوك</span>
               </Link>
             </div>
@@ -57,14 +63,6 @@ export default function Footer() {
                   خدماتنا
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="text-muted-foreground hover:text-primary"
-                >
-                  اتصل بنا
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -73,18 +71,18 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <Phone className="h-5 w-5 ml-2 text-primary" />
-                <span className="text-muted-foreground">+213551669458</span>
+                <span className="text-muted-foreground">+213 664 10 71 67</span>
               </li>
               <li className="flex items-start">
                 <Mail className="h-5 w-5 ml-2 text-primary" />
                 <span className="text-muted-foreground">
-                  info@mrpropreclean.com
+                  mr.propclean@gmail.com
                 </span>
               </li>
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 ml-2 text-primary" />
                 <span className="text-muted-foreground">
-                  123 شارع التنظيف، المدينة، البلد
+                  المقر حاضنة المؤسسات الناشئة innoest company
                 </span>
               </li>
             </ul>
