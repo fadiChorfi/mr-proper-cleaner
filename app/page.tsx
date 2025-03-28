@@ -23,9 +23,10 @@ export default function HomePage() {
               نقدم تنظيفًا شاملاً مع الاهتمام بالتفاصيل في كل مرة، مما يجعل
               مساحتك نظيفة ومريحة.
             </p>
+            
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" asChild>
-                <Link href="/service">احجز خدمة تنظيف</Link>
+                <Link href="/services">احجز خدمة تنظيف</Link>
               </Button>
             </div>
           </div>
@@ -93,9 +94,7 @@ export default function HomePage() {
             <Card className="border-2 hover:border-primary transition-colors">
               <CardHeader className="pb-2">
                 <div className="flex justify-between items-center">
-                  <CardTitle className=" w-fit">
-                    تنظيف المكاتب
-                  </CardTitle>
+                  <CardTitle className=" w-fit">تنظيف المكاتب</CardTitle>
                   <Building2 className="h-10 w-10 text-primary mb-2" />
                 </div>
                 <CardDescription>تنظيف احترافي لمساحات العمل</CardDescription>
