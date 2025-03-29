@@ -83,7 +83,7 @@ export default function Navbar() {
               </Link>
             ))}
             <Button asChild className="mt-2">
-              <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
+              <Link href="/services" onClick={() => setIsMenuOpen(false)}>
                 احجز الآن
               </Link>
             </Button>
