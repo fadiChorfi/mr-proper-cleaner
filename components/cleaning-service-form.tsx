@@ -1,14 +1,27 @@
 "use client";
-import type React from "react"
-import { useState, useEffect } from "react"
-import { ChevronLeft, Home, Building2, Car, Droplets, Brush } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { cn } from "@/lib/utils"
-import { Input } from "./ui/input"
-import { Textarea } from "./ui/textarea"
+import type React from "react";
+import { useState, useEffect } from "react";
+import {
+  ChevronLeft,
+  Home,
+  Building2,
+  Car,
+  Droplets,
+  Brush,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { cn } from "@/lib/utils";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
 
 export default function CleaningServiceForm() {
   const pricingData = {
@@ -49,7 +62,7 @@ export default function CleaningServiceForm() {
       medium: 1000,
       large: 1200,
     },
-  }
+  };
   const services = [
     {
       id: "surface",
@@ -141,19 +154,21 @@ export default function CleaningServiceForm() {
       price: "بعد المعاينة",
       noPropertyType: true,
     },
-  ]
+  ];
 
-  const [selectedService, setSelectedService] = useState<string | null>(null)
-  const [step, setStep] = useState(1)
-  const [selectedItems, setSelectedItems] = useState<Record<string, string[]>>(() => {
-    const initialSelections: Record<string, string[]> = {}
-    services.forEach((service) => {
-      if (service.items.length > 0) {
-        initialSelections[service.id] = [...service.items]
-      }
-    })
-    return initialSelections
-  })
+  const [selectedService, setSelectedService] = useState<string | null>(null);
+  const [step, setStep] = useState(1);
+  const [selectedItems, setSelectedItems] = useState<Record<string, string[]>>(
+    () => {
+      const initialSelections: Record<string, string[]> = {};
+      services.forEach((service) => {
+        if (service.items.length > 0) {
+          initialSelections[service.id] = [...service.items];
+        }
+      });
+      return initialSelections;
+    }
+  );
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -165,7 +180,7 @@ export default function CleaningServiceForm() {
     additionalInfo: "",
     selectedItems: [] as string[],
     price: 0,
-  })
+  });
 
   const propertyTypes = {
     home: [
@@ -182,68 +197,86 @@ export default function CleaningServiceForm() {
       { id: "medium", label: "زربية متوسطة (3×4 متر)" },
       { id: "large", label: "زربية كبيرة (4×6 متر)" },
     ],
-  }
+  };
 
   const timeSlots = [
     { id: "morning", label: "صباحاً (8:00 - 12:00)" },
     { id: "afternoon", label: "ظهراً (12:00 - 16:00)" },
     { id: "evening", label: "مساءً (16:00 - 20:00)" },
-  ]
+  ];
 
   // Calculate price based on service and property type
   const calculatePrice = (serviceType: string, propertyType: string) => {
-    if (!serviceType || !propertyType) return 0
+    if (!serviceType || !propertyType) return 0;
 
-    if (serviceType === "office") return 100 // Per square meter
-    if (serviceType === "car") return 1000
-    if (serviceType === "glass") return 0 // Price after inspection
+    if (serviceType === "office") return 100; // Per square meter
+    if (serviceType === "car") return 1000;
+    if (serviceType === "glass") return 0; // Price after inspection
 
-    if (serviceType === "carpet" && pricingData.carpet[propertyType as keyof typeof pricingData.carpet]) {
-      return pricingData.carpet[propertyType as keyof typeof pricingData.carpet]
+    if (
+      serviceType === "carpet" &&
+      pricingData.carpet[propertyType as keyof typeof pricingData.carpet]
+    ) {
+      return pricingData.carpet[
+        propertyType as keyof typeof pricingData.carpet
+      ];
     }
 
     if (
       pricingData[serviceType as keyof typeof pricingData] &&
-      pricingData[serviceType as keyof typeof pricingData][propertyType as keyof typeof pricingData.surface]
+      pricingData[serviceType as keyof typeof pricingData][
+        propertyType as keyof typeof pricingData.surface
+      ]
     ) {
-      return pricingData[serviceType as keyof typeof pricingData][propertyType as keyof typeof pricingData.surface]
+      return pricingData[serviceType as keyof typeof pricingData][
+        propertyType as keyof typeof pricingData.surface
+      ];
     }
 
-    return 0
-  }
+    return 0;
+  };
 
   // Update price when service or property type changes
   useEffect(() => {
     if (formData.serviceType && formData.propertyType) {
-      const price = calculatePrice(formData.serviceType, formData.propertyType)
-      setFormData((prev) => ({ ...prev, price }))
+      const price = calculatePrice(formData.serviceType, formData.propertyType);
+      setFormData((prev) => ({ ...prev, price }));
     }
-  }, [formData.serviceType, formData.propertyType])
+  }, [formData.serviceType, formData.propertyType]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleServiceSelect = (serviceType: string) => {
-    setSelectedService(serviceType)
-    setFormData((prev) => ({ ...prev, serviceType }))
+    setSelectedService(serviceType);
+    setFormData((prev) => ({ ...prev, serviceType }));
 
     setSelectedItems((prev) => {
-      if (!prev[serviceType] && services.find((s) => s.id === serviceType)?.items.length > 0) {
+      if (
+        !prev[serviceType] &&
+        services.find((s) => s.id === serviceType)?.items.length > 0
+      ) {
         return {
           ...prev,
-          [serviceType]: [...(services.find((s) => s.id === serviceType)?.items || [])],
-        }
+          [serviceType]: [
+            ...(services.find((s) => s.id === serviceType)?.items || []),
+          ],
+        };
       }
-      return prev
-    })
+      return prev;
+    });
 
-    setStep(1)
-  }
+    setStep(1);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
       const res = await fetch("/api/submit", {
@@ -253,12 +286,12 @@ export default function CleaningServiceForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      })
-      const content = await res.json()
-      alert("Data submitted successfully!")
+      });
+      const content = await res.json();
+      alert("Data submitted successfully!");
 
-      setStep(1)
-      setSelectedService(null)
+      setStep(1);
+      setSelectedService(null);
       setFormData({
         fullName: "",
         phone: "",
@@ -270,96 +303,112 @@ export default function CleaningServiceForm() {
         additionalInfo: "",
         selectedItems: [],
         price: 0,
-      })
+      });
     } catch (error) {
-      alert("Failed to submit. Please try again.")
+      alert("Failed to submit. Please try again.");
     }
-  }
+  };
 
   const goBack = () => {
     if (step > 1) {
-      setStep(step - 1)
+      setStep(step - 1);
     } else {
-      setSelectedService(null)
+      setSelectedService(null);
     }
-  }
+  };
 
   const toggleItemSelection = (serviceId: string, item: string) => {
     setSelectedItems((prev) => {
-      const serviceItems = prev[serviceId] || []
-      const isSelected = serviceItems.includes(item)
+      const serviceItems = prev[serviceId] || [];
+      const isSelected = serviceItems.includes(item);
 
-      const updatedItems = isSelected ? serviceItems.filter((i) => i !== item) : [...serviceItems, item]
+      const updatedItems = isSelected
+        ? serviceItems.filter((i) => i !== item)
+        : [...serviceItems, item];
 
       setFormData((prevFormData) => ({
         ...prevFormData,
         selectedItems: updatedItems,
-      }))
+      }));
 
       return {
         ...prev,
         [serviceId]: updatedItems,
-      }
-    })
-  }
+      };
+    });
+  };
 
-  const selectedServiceData = services.find((s) => s.id === selectedService)
+  const selectedServiceData = services.find((s) => s.id === selectedService);
 
   const isFormValid = () => {
     if (step === 1) {
-      const currentServiceData = services.find((s) => s.id === selectedService)
+      const currentServiceData = services.find((s) => s.id === selectedService);
       if (currentServiceData && currentServiceData.items.length > 0) {
-        return selectedItems[selectedService] && selectedItems[selectedService].length > 0
+        return (
+          selectedItems[selectedService] &&
+          selectedItems[selectedService].length > 0
+        );
       }
-      return true
+      return true;
     }
 
     if (step === 2) {
-      return formData.propertyType !== "" || selectedServiceData?.noPropertyType
+      return (
+        formData.propertyType !== "" || selectedServiceData?.noPropertyType
+      );
     }
     if (step === 3) {
-      return formData.fullName !== "" && formData.phone !== "" && formData.address !== ""
+      return (
+        formData.fullName !== "" &&
+        formData.phone !== "" &&
+        formData.address !== ""
+      );
     }
-    return true
-  }
+    return true;
+  };
 
   const proceedToNextStep = () => {
-    const currentServiceData = services.find((s) => s.id === selectedService)
+    const currentServiceData = services.find((s) => s.id === selectedService);
 
     if (currentServiceData && currentServiceData.items.length > 0) {
-      if (!selectedItems[selectedService] || selectedItems[selectedService].length === 0) {
-        alert("يرجى اختيار عنصر واحد على الأقل")
-        return
+      if (
+        !selectedItems[selectedService] ||
+        selectedItems[selectedService].length === 0
+      ) {
+        alert("يرجى اختيار عنصر واحد على الأقل");
+        return;
       }
 
       setFormData((prev) => ({
         ...prev,
         selectedItems: selectedItems[selectedService] || [],
-      }))
+      }));
     }
 
-    setStep(2)
-  }
+    setStep(2);
+  };
 
   // Format price to display with currency
   const formatPrice = (price: number) => {
-    return `${price} دج`
-  }
+    return `${price} دج`;
+  };
 
   // Get price display for service card
   const getServicePriceDisplay = (service: any) => {
-    if (service.id === "office") return "100 دج / متر مربع"
-    if (service.id === "car") return "1000 دج"
-    if (service.id === "glass") return "بعد المعاينة"
+    if (service.id === "office") return "100 دج / متر مربع";
+    if (service.id === "car") return "1000 دج";
+    if (service.id === "glass") return "بعد المعاينة";
 
     if (service.id === "carpet") {
-      return `${pricingData.carpet.small} - ${pricingData.carpet.large} دج`
+      return `${pricingData.carpet.small} - ${pricingData.carpet.large} دج`;
     }
 
-    return `${pricingData[service.id as keyof typeof pricingData]?.studio || 0} - ${pricingData[service.id as keyof typeof pricingData]?.f7 || 0} دج`
-  }
+    return `${pricingData[service.id as keyof typeof pricingData]?.f2 || 0} - ${
+      pricingData[service.id as keyof typeof pricingData]?.f7 || 0
+    } دج`;
+  };
 
-  const ChevronRight = (props: any) => <ChevronLeft {...props} />
+  const ChevronRight = (props: any) => <ChevronLeft {...props} />;
 
   return (
     <div className="container mx-auto py-8 px-4">
@@ -374,13 +423,19 @@ export default function CleaningServiceForm() {
                 "transition-all hover:shadow-md cursor-pointer border-2",
                 service.id === "car"
                   ? "border-border bg-white hover:border-border opacity-50 grayscale cursor-not-allowed"
-                  : "border-border hover:border-primary/50",
+                  : "border-border hover:border-primary/50"
               )}
-              onClick={service.id !== "car" ? () => handleServiceSelect(service.id) : undefined}
+              onClick={
+                service.id !== "car"
+                  ? () => handleServiceSelect(service.id)
+                  : undefined
+              }
             >
               <CardHeader className="pb-2 relative">
                 <div className="flex items-center justify-between">
-                  <div className="p-2 rounded-full bg-primary/10 text-primary">{service.icon}</div>
+                  <div className="p-2 rounded-full bg-primary/10 text-primary">
+                    {service.icon}
+                  </div>
                   <CardTitle className="text-xl">{service.title}</CardTitle>
                 </div>
                 {service.id === "car" && (
@@ -394,17 +449,20 @@ export default function CleaningServiceForm() {
                 {service.items.length > 0 && (
                   <div className="flex flex-wrap justify-end gap-1 mb-3">
                     <div className="flex flex-wrap justify-end gap-2 mb-3 w-full">
-                      <p className="w-full text-right font-medium mb-2">الخدمة تشمل:</p>
+                      <p className="w-full text-right font-medium mb-2">
+                        الخدمة تشمل:
+                      </p>
                       {service.items.map((item: string, index: number) => {
-                        const isSelected = selectedItems[service.id]?.includes(item)
+                        const isSelected =
+                          selectedItems[service.id]?.includes(item);
 
                         return (
                           <button
                             key={index}
                             type="button"
                             onClick={(e) => {
-                              e.stopPropagation() // prevent triggering card click
-                              toggleItemSelection(service.id, item)
+                              e.stopPropagation(); // prevent triggering card click
+                              toggleItemSelection(service.id, item);
                             }}
                             disabled={service.id === "car"} // Disable interactions for the car card
                             className={cn(
@@ -412,21 +470,26 @@ export default function CleaningServiceForm() {
                               service.id === "car"
                                 ? "bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed"
                                 : isSelected
-                                  ? "bg-primary text-white border-primary"
-                                  : "bg-muted text-muted-foreground border-border hover:border-primary",
+                                ? "bg-primary text-white border-primary"
+                                : "bg-muted text-muted-foreground border-border hover:border-primary"
                             )}
                           >
                             {item}
-                            <span className="ml-2 text-xs">{isSelected ? "✓" : "+"}</span>
+                            <span className="ml-2 text-xs">
+                              {isSelected ? "✓" : "+"}
+                            </span>
                           </button>
-                        )
+                        );
                       })}
                     </div>
                   </div>
                 )}
                 <div className="flex justify-between items-center mt-4">
                   <div className="text-sm font-medium">
-                    السعر: {service.id === "car" ? "غير متاح" : getServicePriceDisplay(service)}
+                    السعر:{" "}
+                    {service.id === "car"
+                      ? "غير متاح"
+                      : getServicePriceDisplay(service)}
                   </div>
                 </div>
               </CardContent>
@@ -438,7 +501,9 @@ export default function CleaningServiceForm() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <div className="p-2 rounded-full bg-primary/10 text-primary ml-2">{selectedServiceData?.icon}</div>
+                <div className="p-2 rounded-full bg-primary/10 text-primary ml-2">
+                  {selectedServiceData?.icon}
+                </div>
                 <CardTitle>{selectedServiceData?.title}</CardTitle>
               </div>
               <Button variant="ghost" size="sm" onClick={goBack}>
@@ -450,23 +515,37 @@ export default function CleaningServiceForm() {
               <div className="flex items-center">
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    step >= 1 ? "bg-primary text-white" : "bg-muted text-muted-foreground"
+                    step >= 1
+                      ? "bg-primary text-white"
+                      : "bg-muted text-muted-foreground"
                   }`}
                 >
                   1
                 </div>
-                <div className={`w-16 h-1 ${step >= 2 ? "bg-primary" : "bg-muted"}`}></div>
+                <div
+                  className={`w-16 h-1 ${
+                    step >= 2 ? "bg-primary" : "bg-muted"
+                  }`}
+                ></div>
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    step >= 2 ? "bg-primary text-white" : "bg-muted text-muted-foreground"
+                    step >= 2
+                      ? "bg-primary text-white"
+                      : "bg-muted text-muted-foreground"
                   }`}
                 >
                   2
                 </div>
-                <div className={`w-16 h-1 ${step >= 3 ? "bg-primary" : "bg-muted"}`}></div>
+                <div
+                  className={`w-16 h-1 ${
+                    step >= 3 ? "bg-primary" : "bg-muted"
+                  }`}
+                ></div>
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    step >= 3 ? "bg-primary text-white" : "bg-muted text-muted-foreground"
+                    step >= 3
+                      ? "bg-primary text-white"
+                      : "bg-muted text-muted-foreground"
                   }`}
                 >
                   3
@@ -482,30 +561,38 @@ export default function CleaningServiceForm() {
                   <div className="bg-muted/30 p-4 rounded-lg mb-6">
                     <h4 className="font-medium mb-2">اختر العناصر المطلوبة:</h4>
                     <div className="flex flex-wrap justify-end gap-2 mb-3">
-                      {selectedServiceData.items.map((item: string, index: number) => {
-                        const isSelected = selectedItems[selectedService]?.includes(item)
+                      {selectedServiceData.items.map(
+                        (item: string, index: number) => {
+                          const isSelected =
+                            selectedItems[selectedService]?.includes(item);
 
-                        return (
-                          <button
-                            key={index}
-                            type="button"
-                            onClick={() => toggleItemSelection(selectedService, item)}
-                            className={cn(
-                              "inline-flex items-center text-sm px-3 py-1 rounded-md border transition",
-                              isSelected
-                                ? "bg-primary text-white border-primary"
-                                : "bg-muted text-muted-foreground border-border hover:border-primary",
-                            )}
-                          >
-                            {item}
-                            <span className="ml-2 text-xs">{isSelected ? "✓" : "-"}</span>
-                          </button>
-                        )
-                      })}
+                          return (
+                            <button
+                              key={index}
+                              type="button"
+                              onClick={() =>
+                                toggleItemSelection(selectedService, item)
+                              }
+                              className={cn(
+                                "inline-flex items-center text-sm px-3 py-1 rounded-md border transition",
+                                isSelected
+                                  ? "bg-primary text-white border-primary"
+                                  : "bg-muted text-muted-foreground border-border hover:border-primary"
+                              )}
+                            >
+                              {item}
+                              <span className="ml-2 text-xs">
+                                {isSelected ? "✓" : "-"}
+                              </span>
+                            </button>
+                          );
+                        }
+                      )}
                     </div>
                     <div className="text-sm text-right">
                       <p>
-                        العناصر المختارة: {selectedItems[selectedService]?.length || 0} من{" "}
+                        العناصر المختارة:{" "}
+                        {selectedItems[selectedService]?.length || 0} من{" "}
                         {selectedServiceData.items.length}
                       </p>
                     </div>
@@ -518,7 +605,7 @@ export default function CleaningServiceForm() {
                           setSelectedItems((prev) => ({
                             ...prev,
                             [selectedService]: [],
-                          }))
+                          }));
                         }}
                       >
                         إلغاء تحديد الكل
@@ -531,7 +618,7 @@ export default function CleaningServiceForm() {
                           setSelectedItems((prev) => ({
                             ...prev,
                             [selectedService]: [...selectedServiceData.items],
-                          }))
+                          }));
                         }}
                       >
                         تحديد الكل
@@ -545,7 +632,8 @@ export default function CleaningServiceForm() {
                   disabled={
                     selectedServiceData &&
                     selectedServiceData.items.length > 0 &&
-                    (!selectedItems[selectedService] || selectedItems[selectedService].length === 0)
+                    (!selectedItems[selectedService] ||
+                      selectedItems[selectedService].length === 0)
                   }
                 >
                   متابعة
@@ -561,17 +649,29 @@ export default function CleaningServiceForm() {
                       <Label htmlFor="propertyType">نوع العقار</Label>
                       <Select
                         value={formData.propertyType}
-                        onValueChange={(value: any) => setFormData({ ...formData, propertyType: value })}
+                        onValueChange={(value: any) =>
+                          setFormData({ ...formData, propertyType: value })
+                        }
                       >
                         <SelectTrigger id="propertyType" className="text-right">
                           <SelectValue
-                            placeholder={selectedService === "carpet" ? "اختر نوع الزربية" : "اختر نوع المنزل"}
+                            placeholder={
+                              selectedService === "carpet"
+                                ? "اختر نوع الزربية"
+                                : "اختر نوع المنزل"
+                            }
                           />
                         </SelectTrigger>
                         <SelectContent>
-                          {(selectedService === "carpet" ? propertyTypes.carpet : propertyTypes.home).map((type) => (
+                          {(selectedService === "carpet"
+                            ? propertyTypes.carpet
+                            : propertyTypes.home
+                          ).map((type) => (
                             <SelectItem key={type.id} value={type.id}>
-                              {type.label} - {formatPrice(calculatePrice(selectedService, type.id))}
+                              {type.label} -{" "}
+                              {formatPrice(
+                                calculatePrice(selectedService, type.id)
+                              )}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -581,12 +681,18 @@ export default function CleaningServiceForm() {
                     {formData.propertyType && (
                       <div className="bg-muted/30 p-4 rounded-lg text-center">
                         <h4 className="font-medium mb-2">السعر المقدر:</h4>
-                        <p className="text-2xl font-bold text-primary">{formatPrice(formData.price)}</p>
+                        <p className="text-2xl font-bold text-primary">
+                          {formatPrice(formData.price)}
+                        </p>
                       </div>
                     )}
 
                     <div className="mt-6">
-                      <Button className="w-full" onClick={() => setStep(3)} disabled={!isFormValid()}>
+                      <Button
+                        className="w-full"
+                        onClick={() => setStep(3)}
+                        disabled={!isFormValid()}
+                      >
                         متابعة
                       </Button>
                     </div>
@@ -597,14 +703,17 @@ export default function CleaningServiceForm() {
                       {selectedService === "office"
                         ? "سيتم حساب السعر بناءً على مساحة المكتب (100 دج لكل متر مربع)"
                         : selectedService === "car"
-                          ? "سعر تنظيف السيارة: 1000 دج"
-                          : "سيتم تحديد السعر بعد المعاينة"}
+                        ? "سعر تنظيف السيارة: 1000 دج"
+                        : "سيتم تحديد السعر بعد المعاينة"}
                     </p>
-                    {selectedService === "office" || selectedService === "car" ? (
+                    {selectedService === "office" ||
+                    selectedService === "car" ? (
                       <div className="bg-muted/30 p-4 rounded-lg text-center mb-6">
                         <h4 className="font-medium mb-2">السعر المقدر:</h4>
                         <p className="text-2xl font-bold text-primary">
-                          {selectedService === "office" ? "100 دج / متر مربع" : "1000 دج"}
+                          {selectedService === "office"
+                            ? "100 دج / متر مربع"
+                            : "1000 دج"}
                         </p>
                       </div>
                     ) : null}
@@ -671,7 +780,9 @@ export default function CleaningServiceForm() {
                   <Label htmlFor="preferredTime">الوقت المفضل</Label>
                   <Select
                     value={formData.preferredTime}
-                    onValueChange={(value) => setFormData({ ...formData, preferredTime: value })}
+                    onValueChange={(value) =>
+                      setFormData({ ...formData, preferredTime: value })
+                    }
                   >
                     <SelectTrigger id="preferredTime" className="text-right">
                       <SelectValue placeholder="اختر الوقت المفضل" />
@@ -700,7 +811,9 @@ export default function CleaningServiceForm() {
                 {formData.price > 0 && (
                   <div className="bg-muted/30 p-4 rounded-lg text-center">
                     <h4 className="font-medium mb-2">السعر النهائي:</h4>
-                    <p className="text-2xl font-bold text-primary">{formatPrice(formData.price)}</p>
+                    <p className="text-2xl font-bold text-primary">
+                      {formatPrice(formData.price)}
+                    </p>
                   </div>
                 )}
 
@@ -713,6 +826,5 @@ export default function CleaningServiceForm() {
         </Card>
       )}
     </div>
-  )
+  );
 }
-
