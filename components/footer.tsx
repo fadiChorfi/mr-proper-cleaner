@@ -75,7 +75,7 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <Phone className="h-5 w-5 mt-0.5 ml-2 text-primary flex-shrink-0" />
-                <span className="text-muted-foreground hover:text-primary transition-colors">
+                <span className="text-muted-foreground hover:text-primary transition-colors" dir="ltr">
                   +213 664 10 71 67
                 </span>
               </li>
@@ -91,7 +91,7 @@ export default function Footer() {
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 mt-0.5 ml-2 text-primary flex-shrink-0" />
                 <span className="text-muted-foreground">
-                  المقر حاضنة المؤسسات الناشئة innoest company
+                   حاضنة المؤسسات الناشئة <strong>Innoest company</strong>
                 </span>
               </li>
             </ul>
