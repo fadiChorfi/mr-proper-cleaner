@@ -12,6 +12,9 @@ const tajawal = Tajawal({
 export const metadata = {
   title: "مستر بروبر كلين | خدمات تنظيف احترافية",
   description: "خدمات تنظيف احترافية للمنازل والشركات",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -33,3 +36,4 @@ export default function RootLayout({
 }
 
 import "./globals.css";
+import { icons } from "lucide-react";
