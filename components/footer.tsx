@@ -36,6 +36,20 @@ export default function Footer() {
                   
                 />
               </Link>
+              <Link
+                href="https://www.tiktok.com/@monsieur_propre_clean?_t=ZM-8ux7WK00oIJ&_r=1"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="Instagram"
+              >
+                <Image
+                  src="/insta.svg"
+                  alt="TikTok"
+                  className="h-6 w-6 opacity-55"
+                  width={24}
+                  height={24}
+                  
+                />
+              </Link>
             </div>
           </div>
 
